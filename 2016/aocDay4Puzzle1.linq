@@ -1,0 +1,67 @@
+<Query Kind="Program" />
+
+
+
+void Main()
+{
+	var sectorIDSum = 0;
+	foreach (var input in File.ReadLines(@"c:\projects\AoC\Day4Puzzle1.txt").ToList())
+	{
+		List<LetterCount> letterCounts = new List<LetterCount>();
+		var components = input.Split('-');
+		var sectorID = 0;
+		var checkSum = string.Empty;
+		foreach (var component in components)
+		{
+			if (!component.Contains("["))
+			{
+				foreach (var letter in component)
+				{
+					UpsertLetters(letterCounts, letter.ToString());
+				}
+			}
+			else
+			{
+				var subComponents = component.Split('[');				
+				sectorID = int.Parse(subComponents[0]);
+				checkSum = subComponents[1].Substring(0, subComponents[1].Length - 1);				
+			}
+		}
+
+		var sortedLetters = letterCounts.OrderByDescending(_ => _.Count).ThenBy(_ => _.Letter).ToList();
+		if (checkSum.Contains(sortedLetters[0].Letter)
+			&& checkSum.Contains(sortedLetters[1].Letter)
+			&& checkSum.Contains(sortedLetters[2].Letter)
+			&& checkSum.Contains(sortedLetters[3].Letter)
+			&& checkSum.Contains(sortedLetters[4].Letter))
+		{
+			sectorIDSum += sectorID;
+		}
+	}
+	Console.WriteLine(sectorIDSum);
+}
+
+public void UpsertLetters(List<LetterCount> letterCounts, string letter)
+{
+	var letterCount = letterCounts.SingleOrDefault(_ => _.Letter == letter);
+	if (letterCount != null)
+	{
+		letterCount.Count++;
+		return;
+	}
+	
+	letterCounts.Add(new LetterCount(letter, 1));
+}
+
+public class LetterCount
+{
+	public string Letter { get; set; }
+	public int Count { get; set;}
+	
+	public LetterCount(string letter, int count)
+	{
+			Letter = letter;
+			Count = count;
+	}
+}
+
