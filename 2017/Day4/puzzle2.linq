@@ -1,4 +1,4 @@
-<Query Kind="Expression" />
+<Query Kind="Program" />
 
 void Main()
 {
@@ -10,11 +10,13 @@ void Main()
 	{
 		var dictionary = new Dictionary<string, string>();
 		valid = true;
+		
 		foreach (var word in inputRow.Split(' '))
 		{
+			var orderedWord = string.Concat(word.OrderBy(_ => _));
 			try
 			{
-				dictionary.Add(word, word);
+				dictionary.Add(orderedWord, orderedWord);
 			}
 			catch (Exception ex)
 			{
