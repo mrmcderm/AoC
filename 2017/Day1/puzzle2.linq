@@ -2,18 +2,30 @@
 
 void Main()
 {
-	var inputValues = File.ReadLines(@"c:\projects\aoc\2017\day1\puzzle1Input.txt").FirstOrDefault();
+	var inputValues = File.ReadLines(@"c:\projects\aoc\2017\day1\puzzle2Input.txt").FirstOrDefault();
 
 	var matches = new List<int>();
 
 	for (var i = 0; i < inputValues.Length; i++)
 	{
-		var j = i;
-		var k = j == inputValues.Length - 1 ? 0 : i + 1;
-
-		if (inputValues[j] == inputValues[k])
+		var currentDigitIndex = i;
+		var nextDigitIndex = currentDigitIndex == inputValues.Length - 1 ? 0 : i + 1;
+		
+		var halfwayPoint = inputValues.Length / 2;
+		
+		if(currentDigitIndex < halfwayPoint)
 		{
-			matches.Add(int.Parse(inputValues[j].ToString()));
+			nextDigitIndex = currentDigitIndex + halfwayPoint;
+		}
+		else
+		{
+			nextDigitIndex = currentDigitIndex - halfwayPoint;
+		}
+		
+
+		if (inputValues[currentDigitIndex] == inputValues[nextDigitIndex])
+		{
+			matches.Add(int.Parse(inputValues[currentDigitIndex].ToString()));
 		}
 	}
 
