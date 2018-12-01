@@ -1,4 +1,6 @@
 using System;
+using System.Globalization;
+using System.Collections.Generic;
 
 namespace AoC._2018.Day1
 {
@@ -8,7 +10,28 @@ namespace AoC._2018.Day1
 
         public void Solve()
         {
-            Console.WriteLine("Day 1, Part 2");
+            var input = RawInput.Split("\r\n");
+            var frequenciesSeen = new List<int>();
+            var result = 0;
+            var foundSecondInstance = false;
+
+            while (!foundSecondInstance)
+            {
+                foreach (var freqShift in input)
+                {
+                    result = result + int.Parse(freqShift, NumberStyles.AllowLeadingSign);
+                    if (frequenciesSeen.Contains(result))
+                    {
+                        foundSecondInstance = true;
+                        break;
+                    }
+                    
+                    frequenciesSeen.Add(result);
+                }
+            }
+
+            Console.WriteLine("Day 1, Part 1");
+            Console.WriteLine(result);
         }
     }
 }
