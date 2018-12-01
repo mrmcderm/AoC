@@ -30,7 +30,7 @@ namespace AoC._2018.Day1
                 }
             }
 
-            Console.WriteLine("Day 1, Part 1");
+            Console.WriteLine("Day 1, Part 2");
             Console.WriteLine(result);
         }
     }
