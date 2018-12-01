@@ -8,8 +8,8 @@ namespace AoC._2018
     {
         static void Main(string[] args)
         {
-            const int day = 1;
-            const int part = 2;
+            const int day = 2;
+            const int part = 1;
 
             try
             {
@@ -17,7 +17,7 @@ namespace AoC._2018
                 var puzzle = (IPuzzle) Activator.CreateInstance(Assembly.GetExecutingAssembly().GetType($"AoC._2018.Day{day}.Part{part}"));
                 
                 //Load puzzle input
-                puzzle.RawInput = File.ReadAllText($@"Day{day}\Part{part}Input.txt");
+                puzzle.RawInput = File.ReadAllText($@"..\..\..\Day{day}\Part{part}Input.txt");
                 
                 puzzle.Solve();
             }
