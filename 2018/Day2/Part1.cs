@@ -36,26 +36,26 @@ namespace AoC._2018.Day2
 
         private static bool HasMultiples(string id, int multiple)
         {
-            var letters = new List<Letters>();
+            var letterCounts = new List<LetterCount>();
 
             foreach (var letter in id)
             {
-                var existingLetter = letters.FirstOrDefault(_ => _.Letter == letter);
-                if (existingLetter != null)
+                var exisingLetterCount = letterCounts.FirstOrDefault(_ => _.Letter == letter);
+                if (exisingLetterCount != null)
                 {
-                    existingLetter.Count++;
+                    exisingLetterCount.Count++;
                 }
                 else
                 {
-                    letters.Add(new Letters { Count = 1, Letter = letter });
+                    letterCounts.Add(new LetterCount { Count = 1, Letter = letter });
                 }
             }
 
-            return letters.Any(_ => _.Count == multiple);
+            return letterCounts.Any(_ => _.Count == multiple);
         }
     }
 
-    public class Letters
+    public class LetterCount
     {
         public char Letter { get; set; }
         public int Count { get; set; }

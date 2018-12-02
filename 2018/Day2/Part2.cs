@@ -16,7 +16,7 @@ namespace AoC._2018.Day2
 
             var ids = result.Split("\r\n");
 
-            var comparisons = new List<Comparison>();
+            var idComparisons = new List<IdComparison>();
             for (var i = 0; i < ids.Length; i++)
             {
                 for (var j = 0; j < ids.Length; j++)
@@ -25,31 +25,32 @@ namespace AoC._2018.Day2
                     if (i == j)
                         continue;
 
-                    var delta = Delta(ids[i], ids[j]);
-                    comparisons.Add(new Comparison { Id1 = ids[i], Id2 = ids[j], Delta = delta });
+                    var deltaCount = GetDeltaCount(ids[i], ids[j]);
+                    idComparisons.Add(new IdComparison { Id1 = ids[i], Id2 = ids[j], DeltaCount = deltaCount });
 
                 }
             }
 
-            foreach (var comparison in comparisons.Where(_ => _.Delta == 1))
+            //Visually compare, no need to write code
+            foreach (var idComparison in idComparisons.Where(_ => _.DeltaCount == 1))
             {
-                Console.WriteLine(comparison.Id1);
-                Console.WriteLine(comparison.Id2);
+                Console.WriteLine(idComparison.Id1);
+                Console.WriteLine(idComparison.Id2);
             }
         }
 
-        private int Delta(string firstId, string secondId)
+        private static int GetDeltaCount(string firstId, string secondId)
         {
             return firstId.Where((t, i) => t != secondId[i]).Count();
         }
     }
 
-    public class Comparison
+    public class IdComparison
     {
         public string Id1 { get; set; }
 
         public string Id2 { get; set; }
 
-        public int Delta { get; set; }
+        public int DeltaCount { get; set; }
     }
 }
