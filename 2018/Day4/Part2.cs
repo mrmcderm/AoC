@@ -81,10 +81,22 @@ namespace AoC._2018.Day4
                 Console.WriteLine();
             }
 
-            var answerGuard = guards.First(_ => _.TotalMinutesAsleep == guards.Max(__ => __.TotalMinutesAsleep));
-            var answerGuardId = int.Parse(answerGuard.Id);
-            var answerGuardMostSleptMinute = answerGuard.SleepArray.ToList().IndexOf(answerGuard.SleepArray.Max());
-            Console.WriteLine($"Answer: {answerGuardId * answerGuardMostSleptMinute}");
+            var maxGuardId = 0;
+            var sleptMinute = 0;
+            var spentAsleep = 0;
+            foreach (var guard in guards)
+            {
+                var mostSleptMinute = guard.SleepArray.ToList().IndexOf(guard.SleepArray.Max());
+                var minutesSpentAsleep = guard.SleepArray[mostSleptMinute];
+                if (minutesSpentAsleep > spentAsleep)
+                {
+                    maxGuardId = int.Parse(guard.Id);
+                    sleptMinute = mostSleptMinute;
+                    spentAsleep = minutesSpentAsleep;
+                }
+            }
+
+            Console.WriteLine($"Answer: {maxGuardId * sleptMinute}");
         }
     }
 }

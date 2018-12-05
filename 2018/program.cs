@@ -9,7 +9,7 @@ namespace AoC._2018
         static void Main(string[] args)
         {
             const int day = 4;
-            const int part = 1;
+            const int part = 2;
 
             try
             {
