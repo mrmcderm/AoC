@@ -8,8 +8,8 @@ namespace AoC._2018
     {
         static void Main(string[] args)
         {
-            const int day = 4;
-            const int part = 2;
+            const int day = 5;
+            const int part = 1;
 
             try
             {
