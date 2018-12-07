@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -18,8 +19,10 @@ namespace AoC._2018
                 
                 //Load puzzle input
                 puzzle.RawInput = File.ReadAllText($@"..\..\..\Day{day}\Part{part}Input.txt");
-                
+
+                var stopwatch = Stopwatch.StartNew();
                 puzzle.Solve();
+                Console.WriteLine($"Solution complete in {stopwatch.ElapsedMilliseconds}");
             }
             catch (Exception ex)
             {
