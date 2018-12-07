@@ -4,12 +4,12 @@ using System.Reflection;
 
 namespace AoC._2018
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
             const int day = 6;
-            const int part = 1;
+            const int part = 2;
 
             try
             {
