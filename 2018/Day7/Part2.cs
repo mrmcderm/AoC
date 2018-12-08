@@ -29,16 +29,16 @@ namespace AoC._2018.Day7
             same instructions as above, this is how each second would be spent:
 
             Second   Worker 1   Worker 2   Done
-                0        C          .        
-                1        C          .        
-                2        C          .        
-                3        A          F       C
-                4        B          F       CA
-                5        B          F       CA
-                6        D          F       CAB
-                7        D          F       CAB
-                8        D          F       CAB
-                9        D          .       CABF
+                00        C          .        
+                01        C          .        
+                02        C          .        
+                03        A          F       C
+                04        B          F       CA
+                05        B          F       CA
+                06        D          F       CAB
+                07        D          F       CAB
+                08        D          F       CAB
+                09        D          .       CABF
                 10        E          .       CABFD
                 11        E          .       CABFD
                 12        E          .       CABFD
@@ -59,7 +59,7 @@ namespace AoC._2018.Day7
             it take to complete all of the steps?
             */
 
-            var input = RawInput.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+            var instructionRules = RawInput.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(_ => _.Replace(" must be finished before step ", ","))
                 .Select(_ => _.Replace("Step ", string.Empty))
                 .Select(_ => _.Replace(" can begin.", string.Empty))
@@ -69,6 +69,8 @@ namespace AoC._2018.Day7
                     PredecessorName = _.Split(",")[0],
                 })
                 .ToList();
+
+            var instructionsRemaining = instructionRules.Select(_ => _.PredecessorName).Union(instructionRules.Select(_ => _.Name)).Distinct().OrderBy(_ => _).ToList();
 
             var originalInput = RawInput.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(_ => _.Replace(" must be finished before step ", ","))
@@ -88,7 +90,7 @@ namespace AoC._2018.Day7
             var completedInstructions = new List<string>();
             Console.WriteLine("Second   Worker 1   Worker 2   Done");
 
-            while (input.Count > 0 || instructionsBeingWorked.Count > 0)
+            while (instructionsRemaining.Count > 0 || instructionsBeingWorked.Count > 0)
             {
                 //Cycle the clock
                 secondsElapsed++;
@@ -109,13 +111,19 @@ namespace AoC._2018.Day7
                 if (availableWorkers > 0)
                 {
                     //Find the ready instructions
-                    var readyInstructions = input
+                    var readyInstructions = instructionRules
                         .Select(_ => _.PredecessorName)
-                        .Where(c1 => input.Select(_ => _.Name)
+                        .Where(c1 => instructionRules.Select(_ => _.Name)
                         .All(c2 => c2 != c1))
                         .Distinct()
                         .OrderBy(_ => _)
                         .ToList();
+
+                    //Get the tail instruction
+                    if (readyInstructions.Count == 0 && instructionsRemaining.Count == 1 && instructionsBeingWorked.Count == 0)
+                    {
+                        readyInstructions.Add(instructionsRemaining[0]);
+                    }
 
                     //Assign an instruction to a worker
                     foreach (var instruction in readyInstructions)
@@ -131,7 +139,8 @@ namespace AoC._2018.Day7
                         });
 
                         //Pop the ready instruction off the original stack
-                        input.RemoveAll(_ => _.PredecessorName == instruction);
+                        instructionRules.RemoveAll(_ => _.PredecessorName == instruction);
+                        instructionsRemaining.Remove(instruction);
 
                         //Reduce available worker count
                         availableWorkers--;
@@ -141,16 +150,13 @@ namespace AoC._2018.Day7
                             break;
                     }
                 }
-
-
-               
+           
                 var firstWorker = instructionsBeingWorked.Count > 0 ? instructionsBeingWorked[0].Name : ".";
                 var secondWorker = instructionsBeingWorked.Count > 1 ? instructionsBeingWorked[1].Name : ".";
-                var elapsed = secondsElapsed.ToString().Length < 2 ? "0" + secondsElapsed.ToString() : secondsElapsed.ToString();
+                var elapsed = secondsElapsed.ToString().Length < 2 ? "0" + secondsElapsed : secondsElapsed.ToString();
 
                 var complete = string.Join(string.Empty, completedInstructions);
                 Console.WriteLine($"   {elapsed}        {firstWorker}          {secondWorker}       {complete}");
-
             }
 
             Console.WriteLine($"Answer: {secondsElapsed}");
