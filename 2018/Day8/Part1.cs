@@ -12,11 +12,9 @@ namespace AoC._2018.Day8
         {
             Console.WriteLine("Day 8, Part 1");
 
-            var input = RawInput.Split(new []{' '}, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+            var input = RawInput.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
 
-            var root = BuildTree(input);
-
-            Console.WriteLine($"Answer: {TraverseTree(root)}");
+            Console.WriteLine($"Answer: {TraverseTree(BuildTree(input))}");
         }
 
         private static Node BuildTree(IList<int> input)
@@ -30,7 +28,7 @@ namespace AoC._2018.Day8
             };
 
             input.RemoveAt(0);
-            input.RemoveAt(0);           
+            input.RemoveAt(0);
 
             if (node.ChildNodeCount < 1)
             {
@@ -57,8 +55,8 @@ namespace AoC._2018.Day8
 
         private static int TraverseTree(Node node)
         {
-            return node.ChildNodeCount < 1 
-                ? node.MetadataValues.Sum(_ => _) 
+            return node.ChildNodeCount < 1
+                ? node.MetadataValues.Sum(_ => _)
                 : node.ChildNodes.Aggregate(node.MetadataValues.Sum(_ => _), (current, childNode) => current + TraverseTree(childNode));
         }
 
