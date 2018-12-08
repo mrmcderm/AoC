@@ -11,12 +11,19 @@ namespace AoC._2018.Day7
         public void Solve()
         {
             Console.WriteLine("Day 7, Part 1");
-            
-            var input = RawInput.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries)
+
+            var result = SortInstructions(RawInput);
+
+            Console.WriteLine($"Answer: {string.Join(string.Empty, result.ToArray())}");
+        }
+
+        public static List<string> SortInstructions(string rawInput)
+        {
+            var input = rawInput.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(_ => _.Replace(" must be finished before step ", ","))
                 .Select(_ => _.Replace("Step ", string.Empty))
                 .Select(_ => _.Replace(" can begin.", string.Empty))
-                .Select(_ => new Instruction {Name = _.Split(",")[1], PredecessorName = _.Split(",")[0]})
+                .Select(_ => new Instruction { Name = _.Split(",")[1], PredecessorName = _.Split(",")[0] })
                 .ToList();
 
 
@@ -50,7 +57,7 @@ namespace AoC._2018.Day7
 
             result.Add(lastInstruction);
 
-            Console.WriteLine($"Answer: {string.Join(string.Empty, result.ToArray())}");
+            return result;
         }
 
         private class Instruction
