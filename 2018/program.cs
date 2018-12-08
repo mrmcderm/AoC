@@ -9,8 +9,8 @@ namespace AoC._2018
     {
         private static void Main()
         {
-            const int day = 7;
-            const int part = 2;
+            const int day = 8;
+            const int part = 1;
 
             try
             {
