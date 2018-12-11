@@ -90,18 +90,17 @@ namespace AoC._2018.Day09
             Console.WriteLine("Day 9, Part 1");
 
             var numberOfPlayers = 9;
-            var maxMarblePoints = 25;
-            var currentMarble = 0;
-            var nextMarble = 0;
-            var marbleCircle = new List<int>();
-            var scores = new List<int>(numberOfPlayers);
-            for (var i = 0; i < numberOfPlayers; i++)
+            var maxMarblePoints = 47;
+            var currentMarbleIndex = 0;
+            var nextMarble = 1;
+            var marbleCircle = new List<int> { 0 };
+            var scores = new List<int>(numberOfPlayers + 1);
+            for (var i = 1; i <= numberOfPlayers; i++)
             {
                 scores.Add(0);
             }
 
-
-            for (var playerId = 0; playerId < numberOfPlayers; playerId++)
+            for (var playerId = 1; playerId <= numberOfPlayers; playerId++)
             {
                 //Check for game over condition
                 if (nextMarble > maxMarblePoints)
@@ -110,37 +109,52 @@ namespace AoC._2018.Day09
                 //If the next marble is a special marble...i.e. a multiple of 23...handle things differently
                 if (nextMarble > 0 && nextMarble % 23 == 0)
                 {
-                    //Get the players score.  TODO needs more work here
-                    var score = nextMarble;
-                    scores[playerId] = score;
+                    var kickerIndex = 0;
+                    if (currentMarbleIndex < 7)
+                    {
+                        kickerIndex = marbleCircle.Count - (7 - currentMarbleIndex);
+                    }
+                    else
+                    {
+                        kickerIndex = currentMarbleIndex - 7;
+                    }
+
+
+                    //Get the players score.
+                    var score = nextMarble + marbleCircle[kickerIndex];
+                    marbleCircle.RemoveAt(kickerIndex);
+                    currentMarbleIndex = kickerIndex;
+                    scores[playerId] = scores[playerId] + score;
                 }
                 else
                 {
-                    //Place the marble in the circle TODO Needs more work here
-                    marbleCircle.Add(nextMarble);
+                    var nextPosition = currentMarbleIndex + 2;
+                    if (nextPosition > marbleCircle.Count)
+                    {
+                        nextPosition = 1;
+                    }
+                    marbleCircle.Insert(nextPosition, nextMarble);
+                    currentMarbleIndex = nextPosition;
                 }
 
                 nextMarble++;
-
-                //Make the inserted marble the current marble.
-                currentMarble = marbleCircle.Count;
 
                 //If it's currently the last player's turn, move back to the 1st player
                 if (playerId == numberOfPlayers - 1)
                 {
                     playerId = 0;
                 }
+
+                
+                foreach (var marble in marbleCircle)
+                {
+                    Console.Write(marbleCircle.IndexOf(marble) == currentMarbleIndex ? $"({marble}) " : $"{marble} ");
+                }
+                Console.WriteLine();
+                
             }
 
-
-            foreach (var marble in marbleCircle)
-            {
-                Console.Write($"{marble} ");
-            }
-            Console.WriteLine();
-
-            Console.WriteLine($"Answer: {scores.IndexOf(scores.Max(_ => _))}");
-
+            Console.WriteLine($"Answer: {scores.Max(_ => _)}");
         }
     }
 }
