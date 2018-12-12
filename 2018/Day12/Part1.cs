@@ -1,6 +1,6 @@
 using System;
 
-namespace AoC._2018.Day11
+namespace AoC._2018.Day12
 {
     public class Part1 : IPuzzle
     {
@@ -8,7 +8,7 @@ namespace AoC._2018.Day11
 
         public void Solve()
         {
-            Console.WriteLine("Day 11, Part 1");
+            Console.WriteLine("Day 12, Part 1");
 
             var result = RawInput;
 

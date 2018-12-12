@@ -1,14 +1,14 @@
 using System;
 
-namespace AoC._2018.Day11
+namespace AoC._2018.Day15
 {
-    public class Part1 : IPuzzle
+    public class Part11 : IPuzzle
     {
         public string RawInput { get; set; }
 
         public void Solve()
         {
-            Console.WriteLine("Day 11, Part 1");
+            Console.WriteLine("Day 15, Part 1");
 
             var result = RawInput;
 

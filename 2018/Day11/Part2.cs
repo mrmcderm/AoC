@@ -8,7 +8,7 @@ namespace AoC._2018.Day11
 
         public void Solve()
         {
-            Console.WriteLine("Day 10, Part 1");
+            Console.WriteLine("Day 11, Part 1");
 
             var result = RawInput;
 
