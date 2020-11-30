@@ -1,4 +1,4 @@
-﻿namespace Aoc._2019
+﻿namespace Aoc._2020
 {
     public interface IPuzzle
     {

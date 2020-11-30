@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Aoc._2019.Day01
+namespace Aoc._2020.Day01
 {
     public class Part1 : IPuzzle
     {
