@@ -10,7 +10,7 @@ namespace Aoc._2020
         static void Main(string[] args)
         {
             const string day = "01";
-            const int part = 1;
+            const int part = 2;
 
             try
             {
@@ -22,7 +22,7 @@ namespace Aoc._2020
 
                 var stopwatch = Stopwatch.StartNew();
                 puzzle.Solve();
-                Console.WriteLine($"Solution complete in {stopwatch.ElapsedMilliseconds}");
+                Console.WriteLine($"Solution complete in {stopwatch.ElapsedMilliseconds}ms");
             }
             catch (Exception ex)
             {
