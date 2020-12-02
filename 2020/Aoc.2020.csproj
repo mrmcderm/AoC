@@ -6,4 +6,7 @@
     <RootNamespace>Aoc._2020</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Day02\" />
+  </ItemGroup>
 </Project>
