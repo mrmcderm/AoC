@@ -30,7 +30,7 @@ namespace Aoc._2020.Day02
                 }
             }
 
-            Console.WriteLine("Day 1, Part 1");
+            Console.WriteLine("Day 2, Part 1");
             Console.WriteLine($"Answer: {answer}");
         }
 
