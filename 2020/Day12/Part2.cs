@@ -80,7 +80,7 @@ namespace Aoc._2020.Day12
 
             answer = Math.Abs(shipX) + Math.Abs(shipY);
 
-            Console.WriteLine("Day 12, Part 1");
+            Console.WriteLine("Day 12, Part 2");
             Console.WriteLine($"Answer: {answer}");
         }
 
