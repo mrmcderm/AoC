@@ -7,41 +7,77 @@ namespace Aoc._2020.Day10
     public class Part2 : IPuzzle
     {
         public string RawInput { get; set; }
-        public Dictionary<int, int> ArrangementCache = new Dictionary<int, int>();
-
+        public Dictionary<int, long> ArrangementCache = new Dictionary<int, long>();
+        public List<int> adapters;
+        public int max;
 
         public void Solve()
         {
-            var answer = 0;
-            var adapters = RawInput.Split(Environment.NewLine).Select(_ => int.Parse(_)).OrderBy(_ => _).ToList();
-            //adapters.Insert(0, 0);
-            //adapters.Add(adapters.Max() + 3);
+            long answer = 0;
+            adapters = RawInput.Split(Environment.NewLine).Select(_ => int.Parse(_)).OrderBy(_ => _).ToList();
+            adapters.Insert(0, 0);
+            adapters.Add(adapters.Max() + 3);
+            max = adapters.Max();
 
-            answer = GetTotalArrangements(adapters);
+            answer = GetTotalArrangements(0);
 
             Console.WriteLine("Day 10, Part 2");
             Console.WriteLine($"Answer: {answer}");
         }
 
 
-        private int GetTotalArrangements(List<int> adapters)
+        private long GetTotalArrangements(int i)
         {
-            if (adapters.Count == 1)
-                return 1;
+            long answer = 0;
 
-            var result = 0;
-            var currentAdapter = adapters.Last();
-            var nextAdapters = adapters.Where(_ => _ >= currentAdapter - 3 && _ < currentAdapter).ToList();
-
-            foreach (var adapter in nextAdapters)
+            if(i == max)
             {
-                var newAdapters = new String(string.Join("|", adapters)).Split("|").Select(_ => int.Parse(_)).ToList();
-                newAdapters.RemoveAt(newAdapters.Count - 1);
-                var arrangements = GetTotalArrangements(newAdapters);
-                result += arrangements;
+                return 1;
             }
 
-            return result;
+            if (adapters.Any(_ => _ == i + 1))
+            {
+                if (ArrangementCache.ContainsKey(i + 1))
+                {
+                    answer += ArrangementCache[i + 1];
+                }
+                else
+                {
+                    var result = GetTotalArrangements(i + 1);
+                    answer += result;
+                    ArrangementCache.Add(i + 1, result);
+                }
+            }
+
+            if (adapters.Any(_ => _ == i + 2))
+            {
+                if (ArrangementCache.ContainsKey(i + 2))
+                {
+                    answer += ArrangementCache[i + 2];
+                }
+                else
+                {
+                    var result = GetTotalArrangements(i + 2);
+                    answer += result;
+                    ArrangementCache.Add(i + 2, result);
+                }
+            }
+
+            if (adapters.Any(_ => _ == i + 3))
+            {
+                if (ArrangementCache.ContainsKey(i + 3))
+                {
+                    answer += ArrangementCache[i + 3];
+                }
+                else
+                {
+                    var result = GetTotalArrangements(i + 3);
+                    answer += result;
+                    ArrangementCache.Add(i + 3, result);
+                }
+            }
+
+            return answer;
         }
     }
 }
