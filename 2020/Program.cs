@@ -9,8 +9,8 @@ namespace Aoc._2020
     {
         static void Main(string[] args)
         {
-            const string day = "13";
-            const int part = 2;
+            const string day = "14";
+            const int part = 1;
 
             try
             {
