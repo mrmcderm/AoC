@@ -60,7 +60,7 @@ namespace Aoc._2020.Day14
                 result += valueBits[i];
             }
 
-            return result;
+            return new List<long>() { result };
         }
     }
 }
