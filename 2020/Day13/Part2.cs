@@ -12,7 +12,9 @@ namespace Aoc._2020.Day13
             long answer = 0;
             var inputs = RawInput.Split(Environment.NewLine).ToList();
 
-            var busSchedule = inputs[1].Split(",").ToList();
+            var busSchedule = inputs[1].Replace("x", "1").Split(",").Select(_ => long.Parse(_)).ToList();
+            var busScheduleMax = busSchedule.Count - 1;
+            var busScheduleLast = busSchedule.Last();
             var foundAnswer = false;
             long timeStamp = 100000000000000;
 
@@ -20,20 +22,23 @@ namespace Aoc._2020.Day13
             {
                 answer = timeStamp;
 
-                if(answer % 100000000 == 0)
-                    Console.WriteLine($"{answer} - {DateTime.Now}");
+                var foo = timeStamp % busSchedule[0];
+                var bar = (timeStamp + busScheduleMax) % busScheduleLast;
 
                 //Don't bother checking next buses if 1st bus isn't even leaving
-                if (timeStamp % long.Parse(busSchedule[0]) == 0)
+                if (foo == 0 && bar != 0)
+                {
+                    timeStamp += busScheduleMax;
+                    continue;
+                }
+
+                //if both 1st bus and last bus are leaving, check the middles
+                if (foo == 0 && bar == 0)
                 {
                     foundAnswer = true;
-                    for (int i = 1; i < busSchedule.Count; i++)
+                    for (int i = 1; i < busScheduleMax; i++)
                     {
-                        //No requirements or restrictions on this timestamp
-                        if(busSchedule[i] == "x")
-                            continue;
-
-                        var modulo = (timeStamp + i) % long.Parse(busSchedule[i]);
+                        var modulo = (timeStamp + i) % busSchedule[i];
                         if (modulo != 0)
                         {
                             foundAnswer = false;
