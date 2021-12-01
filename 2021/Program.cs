@@ -3,7 +3,7 @@ using System.Reflection;
 using Aoc._2021;
 
 const string day = "01";
-const int part = 1;
+const int part = 2;
 
 try
 {
@@ -17,7 +17,7 @@ try
     var puzzle = (IPuzzle)Activator.CreateInstance(puzzleType);
 
     //Load puzzle input
-    puzzle.RawInput = File.ReadAllText($@"/Users/mmcdermott/Source/Repos/Aoc/2020/Day{day}/Part{part}Input.txt");
+    puzzle.RawInput = File.ReadAllText($@"/Users/mmcdermott/Source/Repos/Aoc/2021/Day{day}/Part{part}Input.txt");
 
     var stopwatch = Stopwatch.StartNew();
     puzzle.Solve();
