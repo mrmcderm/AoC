@@ -7,7 +7,7 @@ Tuple<int, int> secondVisit = new Tuple<int, int>(0, 0);
 
 void Main()
 {
-	var inputValues = File.ReadAllText(@"c:\projects\AoC\Day1Puzzle1.txt").Split(new string[] { ", "}, StringSplitOptions.RemoveEmptyEntries).ToList();
+	var inputValues = File.ReadAllText(@"C:\Users\mmcdermott\source\repos\AoC\2016\Day1Puzzle1.txt").Split(new string[] { ", "}, StringSplitOptions.RemoveEmptyEntries).ToList();
 	
 	var xCoord = 0;
 	var yCoord = 0;
