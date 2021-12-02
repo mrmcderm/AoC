@@ -6,8 +6,4 @@
     <RootNamespace>Aoc._2019</RootNamespace>
     <AssemblyName>Aoc.2019</AssemblyName>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Day01\" />
-  </ItemGroup>
 </Project>

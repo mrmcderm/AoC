@@ -8,8 +8,16 @@ namespace Aoc._2019.Day01
 
         public void Solve()
         {
+            decimal answer = 0;
+            var massValues = RawInput.Split(Environment.NewLine);
+
+            foreach (var massValue in massValues)
+            {
+                answer += Math.Round((decimal)(Convert.ToInt32(massValue) / 3), MidpointRounding.ToZero) - 2;
+            }
+
             Console.WriteLine("Day 1, Part 1");
-            Console.WriteLine($"Answer: foo");
+            Console.WriteLine($"Answer: {answer}");
         }
     }
 }
