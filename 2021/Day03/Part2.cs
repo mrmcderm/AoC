@@ -9,31 +9,49 @@ namespace Aoc._2021.Day03
         public void Solve()
         {
             var answer = 0;
-            var diagnosticNumbers = RawInput.Split(Environment.NewLine).Select(_ => _.ToArray()).ToList();
+            var oxygenDiagnosticNumbers = RawInput.Split(Environment.NewLine).Select(_ => _.ToArray()).ToList();
+            var carbonDiagnosticNumbers = RawInput.Split(Environment.NewLine).Select(_ => _.ToArray()).ToList();
 
-            var bitLength = diagnosticNumbers[0].Length;
-            var bitCounts = new int[bitLength];
+            var bitLength = oxygenDiagnosticNumbers[0].Length;
+            var oxygenArray = new BitArray(bitLength);
+            var carbonArray = new BitArray(bitLength);
 
-            foreach (var diagnosticNumber in diagnosticNumbers)
-            {
-                for (int i = 0; i < bitLength; i++)
-                {
-                    if (diagnosticNumber[i] == '1')
-                    {
-                        bitCounts[i]++;
-                    }
-                }
-            }
+
 
             for (int i = 0; i < bitLength; i++)
             {
-                if (diagnosticNumbers.Count > 1)
+                var bitCounts = new BitCount[bitLength];
+
+                foreach (var diagnosticNumber in oxygenDiagnosticNumbers)
                 {
-                    var bit = bitCounts[i] > diagnosticNumbers.Count / 2;
+                    for (int j = 0; j < bitLength; j++)
+                    {
+                        if(bitCounts[j] == null)
+                        {
+                            bitCounts[j] = new BitCount()
+                            {
+                                ZerosCount = 0,
+                                OnesCount = 0
+                            };
+                        }
+                        if (diagnosticNumber[j] == '1')
+                        {
+                            bitCounts[j].OnesCount++;
+                        }
+                        else
+                        {
+                            bitCounts[j].ZerosCount++;
+                        }
+                    }
+                }
+
+                if (oxygenDiagnosticNumbers.Count > 1)
+                {
+                    var bit = bitCounts[i].OnesCount >= bitCounts[i].ZerosCount;
 
                     var newDiagnosticNumbers = new List<char[]>();
 
-                    foreach (var diagnosticNumber in diagnosticNumbers)
+                    foreach (var diagnosticNumber in oxygenDiagnosticNumbers)
                     {
                         if ((bit && diagnosticNumber[i] == '1') || !bit && diagnosticNumber[i] == '0')
                         {
@@ -41,12 +59,91 @@ namespace Aoc._2021.Day03
                         }
                     }
 
-                    diagnosticNumbers = newDiagnosticNumbers;
+                    oxygenDiagnosticNumbers = newDiagnosticNumbers;
                 }
             }
 
+            for (int i = 0; i < bitLength; i++)
+            {
+                var bit = oxygenDiagnosticNumbers[0][i] == '1';
+                oxygenArray.Set(i, bit);
+            }
+            Reverse(oxygenArray);
+            int[] array = new int[1];
+            oxygenArray.CopyTo(array, 0);
+            var oxygen = array[0];
 
 
+
+
+
+
+
+
+            for (int i = 0; i < bitLength; i++)
+            {
+                var bitCounts = new BitCount[bitLength];
+
+                foreach (var diagnosticNumber in carbonDiagnosticNumbers)
+                {
+                    for (int j = 0; j < bitLength; j++)
+                    {
+                        if (bitCounts[j] == null)
+                        {
+                            bitCounts[j] = new BitCount()
+                            {
+                                ZerosCount = 0,
+                                OnesCount = 0
+                            };
+                        }
+                        if (diagnosticNumber[j] == '1')
+                        {
+                            bitCounts[j].OnesCount++;
+                        }
+                        else
+                        {
+                            bitCounts[j].ZerosCount++;
+                        }
+                    }
+                }
+
+                if (carbonDiagnosticNumbers.Count > 1)
+                {
+                    var bit = !(bitCounts[i].OnesCount >= bitCounts[i].ZerosCount);
+
+                    var newDiagnosticNumbers = new List<char[]>();
+
+                    foreach (var diagnosticNumber in carbonDiagnosticNumbers)
+                    {
+                        if ((bit && diagnosticNumber[i] == '1') || !bit && diagnosticNumber[i] == '0')
+                        {
+                            newDiagnosticNumbers.Add(diagnosticNumber);
+                        }
+                    }
+
+                    carbonDiagnosticNumbers = newDiagnosticNumbers;
+                }
+            }
+
+            for (int i = 0; i < bitLength; i++)
+            {
+                var bit = carbonDiagnosticNumbers[0][i] == '1';
+                carbonArray.Set(i, bit);
+            }
+            Reverse(carbonArray);
+            array = new int[1];
+            carbonArray.CopyTo(array, 0);
+            var carbon = array[0];
+
+
+
+
+
+
+
+
+
+            answer = oxygen * carbon;
             Console.WriteLine("Day 3, Part 2");
             Console.WriteLine($"Answer: {answer}");
         }
@@ -64,4 +161,11 @@ namespace Aoc._2021.Day03
             }
         }
     }
+}
+
+public class BitCount
+{
+    public int ZerosCount { get; set; }
+
+    public int OnesCount { get; set; }
 }
