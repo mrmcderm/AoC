@@ -5,7 +5,7 @@
 void Main()
 {
 	var sectorIDSum = 0;
-	foreach (var input in File.ReadLines(@"c:\projects\AoC\Day4Puzzle1.txt").ToList())
+	foreach (var input in File.ReadLines(@"C:\Users\mmcdermott\source\repos\AoC\2016\Day4Puzzle1.txt").ToList())
 	{
 		List<LetterCount> letterCounts = new List<LetterCount>();
 		var components = input.Split('-');

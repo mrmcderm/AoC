@@ -2,7 +2,7 @@
 
 void Main()
 {
-	var inputValues = File.ReadLines(@"c:\projects\AoC\Day2Puzzle1.txt");
+	var inputValues = File.ReadLines(@"C:\Users\mmcdermott\source\repos\AoC\2016\Day2Puzzle1.txt");
 	var keyPad = new List<List<string>>()
 		{
 			new List<string>() { string.Empty, string.Empty, "1", string.Empty, string.Empty },

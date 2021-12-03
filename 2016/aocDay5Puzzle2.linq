@@ -4,40 +4,32 @@
 
 void Main()
 {
-	var input = "ojvtpuvg";
-	var password = new string[8];
-	var length = 8;
+	//var input = "uqwqemis";
+	var input = "abc";
+	var startingValue = 0;
+	var password = new string[8] {"_", "_", "_", "_", "_", "_", "_", "_"};
 
+	Console.WriteLine(string.Join("", password));
 	using (var md5 = MD5.Create())
     {
-		for (Int64 i = 0; i < Int64.MaxValue; i++)
+		for(var j = 0; j < 8; j++)
 		{
-			var preHashValue = input + i.ToString();		
-			var hexValues = BitConverter.ToString(md5.ComputeHash(Encoding.ASCII.GetBytes(preHashValue))).Replace("-", string.Empty);
-
-			if (hexValues.StartsWith("00000"))
-            {
-				var position = int.Parse(hexValues.Substring(5, 1), System.Globalization.NumberStyles.HexNumber);
-				var character = hexValues.Substring(6, 1);
-				if (position < 8 && string.IsNullOrEmpty(password[position]))
-				{
-					Console.WriteLine("{2} - {0} @ {1}", character, position, hexValues);
-					password[position] = character;
-					length--;
-				}
+			for (var i = startingValue; i < int.MaxValue; i++)
+			{
+				var hash = BitConverter.ToString(md5.ComputeHash(Encoding.ASCII.GetBytes(input + i.ToString()))).Replace("-", string.Empty).ToLowerInvariant();
 				
-				if (length == 0)
+				if(hash.StartsWith("00000"))
 				{
-					break;
+					int position = -1;
+					if(int.TryParse(hash[5].ToString(), out position) && position > -1 && position < 8)
+					{
+						password[position] = hash[6].ToString();
+						startingValue = i+1;
+						Console.WriteLine(string.Join("", password));
+						break;
+					}
 				}
 			}
 		}
 	}
-
-	foreach (var character in password)
-	{
-		Console.Write(character.ToLower());
-	}
 }
-
-// Define other methods and classes here

@@ -4,21 +4,24 @@
 
 void Main()
 {
-	var input = "abc";
+	var input = "uqwqemis";
+	var startingValue = 0;
 
 	using (var md5 = MD5.Create())
     {
-		for (var i = 0; i < 10; i++)
+		for(var j = 0; j < 8; j++)
 		{
-			var preHashValue = input + i.ToString();
-
-			
-			var hexValues = BitConverter.ToString(md5.ComputeHash(Encoding.ASCII.GetBytes(preHashValue))).Replace("-", string.Empty);
-
-			Console.WriteLine("{0}: {1}", preHashValue, hexValues);
-
+			for (var i = startingValue; i < int.MaxValue; i++)
+			{
+				var hash = BitConverter.ToString(md5.ComputeHash(Encoding.ASCII.GetBytes(input + i.ToString()))).Replace("-", string.Empty).ToLowerInvariant();
+				
+				if(hash.StartsWith("00000"))
+				{
+					Console.Write(hash[5]);
+					startingValue = i+1;
+					break;
+				}
+			}
 		}
 	}
 }
-
-// Define other methods and classes here

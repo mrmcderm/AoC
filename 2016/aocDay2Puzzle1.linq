@@ -2,7 +2,7 @@
 
 void Main()
 {
-	var inputValues = File.ReadLines(@"c:\projects\AoC\Day2Puzzle1.txt");
+	var inputValues = File.ReadLines(@"C:\Users\mmcdermott\source\repos\AoC\2016\Day2Puzzle1.txt");
 	var keyPad = new List<List<int>>() { new List<int>() { 1, 2, 3 }, new List<int>() { 4, 5, 6 }, new List<int>() { 7, 8, 9 } };
 	var position = new KeyPadPosition() { XCoord = 1, YCoord = 1 };
 
