@@ -151,7 +151,11 @@ namespace Aoc._2021.Day04
                 {
                     for (var j = 0; j < 5; j++)
                     {
-                        if (GridValues[i][j] > 9 || GridValues[i][j] < 0)
+                        if(GridValues[i][j] == -1)
+                        {
+                            result.Append(" * ");
+                        }
+                        else if (GridValues[i][j] > 9 || GridValues[i][j] < 0)
                         {
                             result.Append($"{GridValues[i][j]} ");
                         }
