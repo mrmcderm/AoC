@@ -2,7 +2,7 @@
 using System.Reflection;
 using Aoc._2021;
 
-const string day = "06";
+const string day = "07";
 const int part = 2;
 
 try
