@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.Text;
 
 namespace Aoc._2021.Day08
 {
@@ -13,30 +12,12 @@ namespace Aoc._2021.Day08
             var lines = RawInput.Split(Environment.NewLine);
             var outputValues = new Dictionary<string, int>();
 
-            /*
-             * be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
-                edbfga begcd cbg gc gcadebf fbgde acbgfd abcde gfcbed gfec | fcgedb cgb dgebacf gc
-                fgaebd cg bdaec gdafb agbcfd gdcbef bgcad gfac gcb cdgabef | cg cg fdcagb cbg
-                fbegcd cbd adcefb dageb afcb bc aefdc ecdab fgdeca fcdbega | efabcd cedba gadfec cb
-                aecbfdg fbg gf bafeg dbefa fcge gcbea fcaegb dgceab fcbdga | gecf egdcabf bgf bfgea
-                fgeab ca afcebg bdacfeg cfaedg gcfdb baec bfadeg bafgc acf | gebdcfa ecba ca fadegcb
-                dbcfg fgd bdegcaf fgec aegbdf ecdfab fbedc dacgb gdcebf gf | cefg dcbef fcge gbcadfe
-                bdfegc cbegaf gecbf dfcage bdacg ed bedf ced adcbefg gebcd | ed bcgafe cdgba cbgef
-                egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
-                gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce
-            */
-
             foreach (var line in lines)
             {
                 var parsedLine = line.Split(" | ");
                 var signalPatterns = parsedLine[0].Split(" ");
                 var lineOutputValues = parsedLine[1].Split(" ");
                 var answerKey = new Dictionary<int, string>();
-
-                answerKey.Add(1, signalPatterns.First(_ => _.Length == 2));
-                answerKey.Add(7, signalPatterns.First(_ => _.Length == 3));
-                answerKey.Add(4, signalPatterns.First(_ => _.Length == 4));
-                answerKey.Add(8, signalPatterns.First(_ => _.Length == 7));
 
                 //length 2 = 1
                 //length 3 = 7
@@ -56,11 +37,17 @@ namespace Aoc._2021.Day08
                 //3 = length 3 after removing 1
                 //5 = length 4 after removing 1
 
+                //Find 1, 7, 4, & 8
+                answerKey.Add(1, signalPatterns.First(_ => _.Length == 2));
+                answerKey.Add(7, signalPatterns.First(_ => _.Length == 3));
+                answerKey.Add(4, signalPatterns.First(_ => _.Length == 4));
+                answerKey.Add(8, signalPatterns.First(_ => _.Length == 7));
+
                 //Find 9
                 var lengthSixNums = signalPatterns.Where(_ => _.Length == 6).ToArray();
                 foreach (var lengthSixNum in lengthSixNums)
                 {
-                    var newLength = Subtract(lengthSixNum, answerKey[4]).Length;
+                    var newLength = Remove(lengthSixNum, answerKey[4]).Length;
 
                     if(newLength == 2)
                     {
@@ -72,7 +59,7 @@ namespace Aoc._2021.Day08
                 var lengthFiveNums = signalPatterns.Where(_ => _.Length == 5).ToArray();
                 foreach (var lengthFiveNum in lengthFiveNums)
                 {
-                    var newLength = Subtract(lengthFiveNum, answerKey[9]).Length;
+                    var newLength = Remove(lengthFiveNum, answerKey[9]).Length;
 
                     if (newLength == 1)
                     {
@@ -80,13 +67,12 @@ namespace Aoc._2021.Day08
                     }
                 }
 
-
                 //Find 0 & 6
                 foreach (var lengthSixNum in lengthSixNums)
                 {
                     if (lengthSixNum != answerKey[9])
                     {
-                        var newLength = Subtract(lengthSixNum, answerKey[1]).Length;
+                        var newLength = Remove(lengthSixNum, answerKey[1]).Length;
 
                         if (newLength == 4)
                         {
@@ -100,13 +86,12 @@ namespace Aoc._2021.Day08
                     }
                 }
 
-
                 //Find 3 & 5
                 foreach (var lengthFiveNum in lengthFiveNums)
                 {
                     if (lengthFiveNum != answerKey[2])
                     {
-                        var newLength = Subtract(lengthFiveNum, answerKey[1]).Length;
+                        var newLength = Remove(lengthFiveNum, answerKey[1]).Length;
 
                         if (newLength == 3)
                         {
@@ -132,11 +117,11 @@ namespace Aoc._2021.Day08
             Console.WriteLine($"Answer: {answer}");
         }
 
-        private string Subtract(string left, string right)
+        private static string Remove(string left, string right)
         {
             var sb = new StringBuilder();
                         
-            //Subtracting right from left
+            //Removing right from left
             //For every letter in left...
             foreach(var letter in left)
             {
