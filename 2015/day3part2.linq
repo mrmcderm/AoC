@@ -2,7 +2,7 @@
 
 void Main()
 {
-	var rawInput = File.ReadAllText(@"c:\projects\aoc\2015\day3part1Input.txt");
+	var rawInput = File.ReadAllText(@"C:\Users\mmcdermott\source\repos\AoC\2015\day3part1Input.txt");
 	
 	var santaCurrentHouse = new House{X = 0, Y = 0};
 	var roboSantaCurrentHouse = new House{X = 0, Y = 0};
@@ -16,6 +16,7 @@ void Main()
 	{
 		if (santasTurn)
 		{
+			Console.WriteLine($"Santa's turn: {instruction}");
 			switch (instruction)
 			{
 				case '^':
@@ -40,6 +41,7 @@ void Main()
 		}
 		else
 		{
+			Console.WriteLine($"Robot's turn: {instruction}");
 			switch (instruction)
 			{
 				case '^':
