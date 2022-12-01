@@ -6,6 +6,16 @@
 
         public void Solve()
         {
+            // Code Golf Solution
+            var answer = RawInput.Split("\r\n\r\n")
+                .Select(_ => _.Split("\r\n")
+                .Select(_ => int.Parse(_)))
+                .Select(_ => _.Sum())
+                .OrderByDescending(_ => _)
+                .Take(3)
+                .Sum();
+
+            /* ORIGINAL SOLUTION
             var answer = 0;
             var splitInput = RawInput.Split("\r\n").Select(_ => _).ToList();
             var elves = new List<int>();
@@ -26,6 +36,7 @@
             }
 
             answer = elves.OrderByDescending(_ => _).Take(3).Sum();
+            */
 
             Console.WriteLine("Day 1, Part 2");
             Console.WriteLine($"Answer: {answer}");
