@@ -25,9 +25,7 @@
                 }
             }
 
-            var orderedElves = elves.OrderByDescending(_ => _).ToList();
-
-            answer = orderedElves.Take(3).Sum();
+            answer = elves.OrderByDescending(_ => _).Take(3).Sum();
 
             Console.WriteLine("Day 1, Part 2");
             Console.WriteLine($"Answer: {answer}");
