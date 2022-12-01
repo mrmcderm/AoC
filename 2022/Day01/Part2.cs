@@ -7,8 +7,26 @@
         public void Solve()
         {
             var answer = 0;
-            var depths = RawInput.Split("\r\n").Select(_ => int.Parse(_)).ToList();
+            var splitInput = RawInput.Split("\r\n").Select(_ => _).ToList();
+            var elves = new List<int>();
 
+            var currentCalorieCount = 0;
+            foreach (var input in splitInput)
+            {
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    elves.Add(currentCalorieCount);
+                    currentCalorieCount = 0;
+                }
+                else
+                {
+                    currentCalorieCount += int.Parse(input);
+                }
+            }
+
+            var foo = elves.OrderByDescending(_ => _).ToList();
+
+            answer = foo.Take(3).Sum();
 
             Console.WriteLine("Day 1, Part 2");
             Console.WriteLine($"Answer: {answer}");
