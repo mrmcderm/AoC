@@ -3,7 +3,7 @@ using System.Reflection;
 using Aoc._2023;
 
 const string day = "03";
-const int part = 1;
+const int part = 2;
 
 try
 {
